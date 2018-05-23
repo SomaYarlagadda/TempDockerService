@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: temp-docker-service
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: temp-docker-service
+  template:
+    metadata:
+      labels:
+        app: temp-docker-service
+    spec:
+      containers:
+        - name: temp-docker-service
+          image: ssyeshopacr.azurecr.io/testrepo/tempdockerservice
+          ports:
+            - containerPort: 8080
+      imagePullSecrets:
+      - name: regcred
